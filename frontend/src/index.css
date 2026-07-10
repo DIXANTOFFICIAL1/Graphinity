@@ -1,0 +1,190 @@
+body {
+  margin: 0;
+  background: radial-gradient(
+    circle at top,
+    #0b1220 0%,
+    #020617 70%
+  );
+  color: #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  background: linear-gradient(
+    180deg,
+    #1e293b 0%,
+    #020617 100%
+  );
+  color: #ffffff;
+  border: 1px solid #273449;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+button:hover {
+  background: #273449;
+  border-color: #334155;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+input,
+select,
+textarea {
+  background-color: #020617;
+  color: #e5e7eb;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #64748b;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+.react-flow__background {
+  background-color: transparent;
+}
+
+.react-flow__node {
+  background: linear-gradient(
+    180deg,
+    #1c2536 0%,
+    #020617 100%
+  );
+  border: 1px solid #273449;
+  border-radius: 14px;
+  padding: 12px;
+  color: #e5e7eb;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.react-flow__node:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: #38bdf8;
+  border: 2px solid #020617;
+}
+
+.react-flow__edge-path {
+  stroke: #64748b;
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  background: rgba(2, 6, 23, 0.85);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  left: 12px !important;
+}
+
+.react-flow__controls button {
+  background: linear-gradient(
+    180deg,
+    #f8fafc,
+    #e5e7eb
+  );
+  color: #020617;
+  border: none;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  margin: 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.12s ease;
+}
+
+.react-flow__controls button:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.react-flow__minimap {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.draggable-node {
+  background: linear-gradient(
+    180deg,
+    #1c2536 0%,
+    #020617 100%
+  );
+  border: 1px solid #273449;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #ffffff;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.draggable-node:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+
+
+
+
