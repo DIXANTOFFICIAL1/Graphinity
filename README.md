@@ -151,8 +151,6 @@ http://127.0.0.1:8000/docs
 
 <img width="100%" alt="Graphinity Preview" src="https://via.placeholder.com/1200x650?text=Graphinity+Visual+Pipeline+Designer">
 
-*(Replace this image with your project screenshot.)*
-
 ---
 
 ## 📈 Future Enhancements
