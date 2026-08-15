@@ -31,7 +31,6 @@ export default function InputNode({ id, data }) {
         </label>
       </div>
     </BaseNode>
-
   );
 }
 
