@@ -19,6 +19,7 @@ export default function InputNode({ id, data }) {
           />
         </label>
 
+          
         <label>
           Type:
           <select
