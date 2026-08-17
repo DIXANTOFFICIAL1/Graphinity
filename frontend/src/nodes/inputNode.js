@@ -18,8 +18,7 @@ export default function InputNode({ id, data }) {
             onChange={(e) => setCurrName(e.target.value)}
           />
         </label>
-
-              
+      
         <label>
           Type:
           <select
