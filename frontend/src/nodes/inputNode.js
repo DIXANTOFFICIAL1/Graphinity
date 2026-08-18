@@ -25,6 +25,7 @@ export default function InputNode({ id, data }) {
             value={inputType}
             onChange={(e) => setInputType(e.target.value)}
           >
+              
             <option value="Text">Text</option>
             <option value="File">File</option>
           </select>
