@@ -68,7 +68,7 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: #38bdf8;
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 0 1px rgba(56, 190, 248, 0.35);
 }
 
 .react-flow__background {
