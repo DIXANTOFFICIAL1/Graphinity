@@ -1,35 +1,50 @@
-// textNode.js
-
-import { useState, useMemo } from "react";
 import BaseNode from "./BaseNode";
+import useNodeField from "../useNodeField";
 
-export default function TextNode() {
-  const [text, setText] = useState("");
+export default function TextNode({
+  id,
+  data,
+}) {
 
-  const variableInputs = useMemo(() => {
-    const regex = /{{\s*([a-zA-Z_$][\w$]*)\s*}}/g;
-    const vars = new Set();
-    let match;
-    while ((match = regex.exec(text))) {
-      vars.add(match[1]);
-    }
-    return Array.from(vars);
-  }, [text]);
+  const [
+    text,
+    setText,
+  ] = useNodeField(
+    id,
+    data,
+    "text",
+    "Result: {{input}}"
+  );
 
-  const inputs = ["in", ...variableInputs];
 
   return (
-    <BaseNode title="Text" inputs={inputs} outputs={["out"]}>
+
+    <BaseNode
+      title="Text"
+      inputs={["in"]}
+      outputs={["out"]}
+    >
+
       <textarea
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) =>
+          setText(
+            e.target.value
+          )
+        }
+        placeholder="Use {{input}}"
         style={{
-          width: "100%",
-          minHeight: 60,
-          resize: "none",
+          width:
+            "100%",
+
+          minHeight:
+            70,
+
+          resize:
+            "none",
         }}
-        placeholder="Type text with {{variables}}"
       />
+
     </BaseNode>
   );
 }

@@ -1,27 +1,45 @@
-import { useState } from "react";
 import BaseNode from "./BaseNode";
+import useNodeField from "../useNodeField";
 
-export default function DelayNode() {
-  const [delay, setDelay] = useState(1000);
+
+export default function DelayNode({
+  id,
+  data,
+}) {
+
+  const [
+    delay,
+    setDelay,
+  ] = useNodeField(
+    id,
+    data,
+    "delay",
+    1000
+  );
+
 
   return (
+
     <BaseNode
       title="Delay"
       inputs={["in"]}
       outputs={["out"]}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-        <div>Delay (ms):</div>
-        <input
-          type="number"
-          value={delay}
-          onChange={(e) => setDelay(e.target.value)}
-        />
 
-        <div style={{ fontSize: "11px", opacity: 0.7 }}>
-          Delays execution by given time
-        </div>
-      </div>
+      <input
+        type="number"
+        min="0"
+        max="5000"
+        value={delay}
+        onChange={(e) =>
+          setDelay(
+            Number(
+              e.target.value
+            )
+          )
+        }
+      />
+
     </BaseNode>
   );
 }
