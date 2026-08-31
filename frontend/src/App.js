@@ -8,6 +8,7 @@ function App() {
       <PipelineToolbar />
       <PipelineUI />
       <SubmitButton />
+    
     </div>
   );
 }
