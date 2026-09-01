@@ -77,6 +77,7 @@ export const PipelineUI = () => {
     (node) => node.selected
   );
 
+  // NODE DATA
   const getInitNodeData = (nodeID, type) => {
     const nodeData = {
       id: nodeID,
@@ -85,11 +86,10 @@ export const PipelineUI = () => {
 
     switch (type) {
       case "customInput":
-        nodeData.inputName =
-          nodeID.replace(
-            "customInput-",
-            "input_"
-          );
+        nodeData.inputName = nodeID.replace(
+          "customInput-",
+          "input_"
+        );
         nodeData.inputType = "Text";
         break;
 
@@ -115,8 +115,7 @@ export const PipelineUI = () => {
         break;
 
       case "condition":
-        nodeData.condition =
-          "value > 10";
+        nodeData.condition = "value > 10";
         break;
 
       case "delay":
@@ -129,11 +128,10 @@ export const PipelineUI = () => {
         break;
 
       case "customOutput":
-        nodeData.outputName =
-          nodeID.replace(
-            "customOutput-",
-            "output_"
-          );
+        nodeData.outputName = nodeID.replace(
+          "customOutput-",
+          "output_"
+        );
         nodeData.outputType = "Text";
         break;
 
@@ -144,6 +142,7 @@ export const PipelineUI = () => {
     return nodeData;
   };
 
+  // DROP HANDLERS
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -196,18 +195,16 @@ export const PipelineUI = () => {
             reactFlowBounds.top,
         });
 
-      const nodeID =
-        getNodeID(type);
+      const nodeID = getNodeID(type);
 
       addNode({
         id: nodeID,
         type,
         position,
-        data:
-          getInitNodeData(
-            nodeID,
-            type
-          ),
+        data: getInitNodeData(
+          nodeID,
+          type
+        ),
       });
     },
     [
@@ -220,18 +217,16 @@ export const PipelineUI = () => {
   const onDragOver = useCallback(
     (event) => {
       event.preventDefault();
-      event.dataTransfer.dropEffect =
-        "move";
+      event.dataTransfer.dropEffect = "move";
     },
     []
   );
 
-  // DELETE SELECTED NODES
+  // DELETE NODE
   const deleteSelectedNodes = useCallback(() => {
-    const selectedIds =
-      nodes
-        .filter((node) => node.selected)
-        .map((node) => node.id);
+    const selectedIds = nodes
+      .filter((node) => node.selected)
+      .map((node) => node.id);
 
     if (!selectedIds.length) {
       return;
@@ -248,12 +243,8 @@ export const PipelineUI = () => {
       edges
         .filter(
           (edge) =>
-            selectedIds.includes(
-              edge.source
-            ) ||
-            selectedIds.includes(
-              edge.target
-            )
+            selectedIds.includes(edge.source) ||
+            selectedIds.includes(edge.target)
         )
         .map((edge) => ({
           type: "remove",
@@ -267,7 +258,7 @@ export const PipelineUI = () => {
     onEdgesChange,
   ]);
 
-  // DELETE / BACKSPACE KEYBOARD SUPPORT
+  // KEYBOARD DELETE
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (
@@ -281,12 +272,9 @@ export const PipelineUI = () => {
         document.activeElement;
 
       const isTyping =
-        activeElement?.tagName ===
-          "INPUT" ||
-        activeElement?.tagName ===
-          "TEXTAREA" ||
-        activeElement?.tagName ===
-          "SELECT";
+        activeElement?.tagName === "INPUT" ||
+        activeElement?.tagName === "TEXTAREA" ||
+        activeElement?.tagName === "SELECT";
 
       if (isTyping) {
         return;
@@ -319,6 +307,7 @@ export const PipelineUI = () => {
     deleteSelectedNodes,
   ]);
 
+  // FIT WORKFLOW
   const fitWorkflow = useCallback(() => {
     if (
       reactFlowInstance &&
@@ -352,8 +341,7 @@ export const PipelineUI = () => {
         position: "relative",
         overflow: "hidden",
         background: "#020817",
-        borderBottom:
-          "1px solid #172338",
+        borderBottom: "1px solid #172338",
       }}
     >
       {/* CANVAS TITLE */}
@@ -366,10 +354,8 @@ export const PipelineUI = () => {
           pointerEvents: "none",
           padding: "6px 10px",
           borderRadius: "6px",
-          background:
-            "rgba(15,23,42,0.88)",
-          border:
-            "1px solid #26364f",
+          background: "rgba(15,23,42,0.88)",
+          border: "1px solid #26364f",
           color: "#64748b",
           fontSize: "9px",
           fontWeight: "600",
@@ -392,10 +378,8 @@ export const PipelineUI = () => {
               zIndex: 10,
               padding: "6px 10px",
               borderRadius: "6px",
-              border:
-                "1px solid #7f1d1d",
-              background:
-                "rgba(69,10,10,0.9)",
+              border: "1px solid #7f1d1d",
+              background: "rgba(69,10,10,0.9)",
               color: "#fca5a5",
               fontSize: "9px",
               fontWeight: "600",
@@ -417,10 +401,7 @@ export const PipelineUI = () => {
         onInit={setReactFlowInstance}
         nodeTypes={nodeTypes}
         proOptions={proOptions}
-        snapGrid={[
-          gridSize,
-          gridSize,
-        ]}
+        snapGrid={[gridSize, gridSize]}
         connectionLineType="smoothstep"
         minZoom={0.2}
         maxZoom={2}
@@ -443,15 +424,12 @@ export const PipelineUI = () => {
           showZoom={true}
           showFitView={true}
           showInteractive={true}
-          onInteractiveChange={
-            setInteractive
-          }
+          onInteractiveChange={setInteractive}
           style={{
             marginLeft: "18px",
             marginBottom: "18px",
             background: "#0f172a",
-            border:
-              "1px solid #26364f",
+            border: "1px solid #26364f",
             borderRadius: "10px",
             padding: "4px",
             boxShadow:
@@ -468,12 +446,10 @@ export const PipelineUI = () => {
           style={{
             marginRight: "14px",
             marginBottom: "14px",
-            border:
-              "1px solid #26364f",
+            border: "1px solid #26364f",
             borderRadius: "10px",
             overflow: "hidden",
-            background:
-              "#0f172a",
+            background: "#0f172a",
           }}
         />
       </ReactFlow>
