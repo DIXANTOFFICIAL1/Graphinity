@@ -1,18 +1,17 @@
 <div align="center">
 
 # 🔷 Graphinity
-### Visual AI Workflow Builder & Execution Engine
+### Visual AI Workflow Builder
 
-A full-stack visual workflow platform that allows users to build, connect, validate, and execute AI and data workflows through a node-based interface. Graphinity combines a React Flow visual editor with a FastAPI execution backend supporting DAG validation, conditional branching, real LLM execution, HTTP API calls, and detailed workflow monitoring.
+A full-stack visual workflow platform for building, connecting, validating, and executing AI and data workflows through a node-based interface.
 
-![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![React Flow](https://img.shields.io/badge/React%20Flow-Workflow%20Editor-0f172a?style=for-the-badge)
-![Zustand](https://img.shields.io/badge/State-Zustand-443627?style=for-the-badge)
-![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python)
-![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi)
-![NetworkX](https://img.shields.io/badge/Graph-NetworkX-1f77b4?style=for-the-badge)
-![Groq](https://img.shields.io/badge/AI-Groq%20API-6E56CF?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Zustand](https://img.shields.io/badge/Zustand-State%20Management-443627?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python)
+![NetworkX](https://img.shields.io/badge/NetworkX-Graph%20Engine-1f77b4?style=for-the-badge)
+![Groq](https://img.shields.io/badge/Groq-AI%20API-6E56CF?style=for-the-badge)
 
 </div>
 
@@ -20,29 +19,23 @@ A full-stack visual workflow platform that allows users to build, connect, valid
 
 # 📖 Overview
 
-Graphinity is a visual workflow builder designed for creating and executing connected workflows through a node-based interface.
+Graphinity is a visual workflow builder that allows users to create workflows by dragging nodes onto a canvas and connecting them together.
 
-Instead of writing every workflow as procedural code, users can drag nodes onto a canvas, connect them, configure their inputs, and execute the complete workflow through a FastAPI-powered backend.
+The frontend is built with **React and React Flow**, while the backend uses **FastAPI and NetworkX** to validate and execute workflow graphs.
 
-The platform separates the application into two major layers:
-
-- **React + React Flow frontend** for visual workflow creation
-- **FastAPI backend** for workflow validation and execution
-
-Graphinity supports both traditional workflow operations and AI-powered processing, allowing users to combine logic, transformations, APIs, delays, conditions, and LLM calls in a single workflow.
+Graphinity supports AI-powered processing through the **Groq API**, along with conditional branching, HTTP API calls, mathematical operations, text processing, filtering, delays, and detailed execution monitoring.
 
 ---
 
 # ✨ Key Features
 
-- 🧩 Visual drag-and-drop workflow builder
+- 🧩 Drag-and-drop workflow builder
 - 🔗 Node-based workflow connections
 - 🧠 DAG-based workflow execution
-- 🔍 Workflow cycle validation
-- ⚡ Workflow execution through FastAPI
+- 🔍 Workflow cycle detection and validation
 - 🤖 Real LLM execution using Groq API
-- 🌐 HTTP API workflow nodes
-- 🔀 Conditional TRUE/FALSE branching
+- 🔀 TRUE/FALSE conditional branching
+- 🌐 HTTP API nodes
 - ➕ Mathematical operations
 - 🔎 Keyword-based filtering
 - 📝 Text processing and variable resolution
@@ -53,129 +46,70 @@ Graphinity supports both traditional workflow operations and AI-powered processi
 - 📋 Execution order tracking
 - ⏱️ Node-level execution timing
 - 🧾 Node input/output logging
-- ❌ Delete nodes without refreshing the application
+- ❌ Delete nodes without refreshing
 - 🔒 Canvas interaction lock
 - 🔍 Zoom and fit-view controls
 - 🗺️ Workflow minimap
 - 🎨 Dark workflow editor
-- 🧱 Modular frontend node architecture
-- 🚀 Modular FastAPI backend architecture
+- 🧱 Modular frontend architecture
+- 🚀 Modular FastAPI backend
 
 ---
 
-# 🏗️ System Architecture
-
-Graphinity follows a **frontend + backend workflow execution architecture**:
+# 🏗️ Architecture
 
 ```text
-                         User
-                           │
-                           ▼
-                 ┌──────────────────┐
-                 │ React Frontend   │
-                 │                  │
-                 │ React Flow       │
-                 │ Zustand          │
-                 └────────┬─────────┘
-                          │
-                          │ Workflow JSON
-                          ▼
-                 ┌──────────────────┐
-                 │ FastAPI Backend  │
-                 │                  │
-                 │ Validation       │
-                 │ Graph Processing │
-                 │ Execution Engine │
-                 └────────┬─────────┘
-                          │
-               ┌──────────┼──────────┐
-               │          │          │
-               ▼          ▼          ▼
-           NetworkX    Groq API   HTTP APIs
-               │          │          │
-               └──────────┼──────────┘
-                          ▼
-                  Workflow Execution
-                          │
-                          ▼
-                  Execution Results
-                          │
-                          ▼
-                  React Execution Monitor
+                    User
+                      │
+                      ▼
+              React Frontend
+                      │
+                      │ Workflow JSON
+                      ▼
+               FastAPI Backend
+                      │
+              ┌───────┴────────┐
+              │                │
+              ▼                ▼
+           NetworkX         Node Engine
+       Graph Validation    Execution Logic
+                                │
+                  ┌─────────────┼─────────────┐
+                  ▼             ▼             ▼
+                Groq         HTTP APIs     Logic Nodes
+                  │
+                  ▼
+           Execution Results
+                  │
+                  ▼
+          Execution Monitor
 ```
 
-The frontend sends the workflow structure, node configuration, edges, and workflow inputs to the backend.
+The frontend is responsible for visually creating and configuring workflows.
 
-The backend validates the graph, determines a valid execution order, executes nodes, handles conditional routing, records execution logs, and returns the execution result to the frontend.
-
----
-
-# 🚀 Technology Stack
-
-## Frontend
-
-- React.js
-- JavaScript (ES6+)
-- React Flow
-- Zustand
-- HTML5
-- CSS3
-- React Markdown
-- remark-gfm
-
-## Backend
-
-- Python
-- FastAPI
-- Uvicorn
-- Pydantic
-- Python Requests
-
-## Workflow Engine
-
-- NetworkX
-- Directed Acyclic Graph (DAG) execution
-- Dependency-based node execution
-- Handle-aware workflow routing
-- Conditional branch execution
-
-## AI
-
-- Groq API
-- Groq Python SDK
-- GPT OSS 20B
-
-## Development Tools
-
-- Git
-- GitHub
-- VS Code
-- npm
-- Python virtual environment
+The backend receives the workflow graph, validates it, determines the execution order, executes the nodes, handles conditional routing, records execution details, and returns the results to the frontend.
 
 ---
 
-# 🧩 Supported Workflow Nodes
-
-Graphinity currently provides the following node types:
+# 🧩 Workflow Nodes
 
 | Node | Purpose |
 |------|---------|
-| Input | Provides workflow input values |
-| LLM | Processes input using a real LLM through Groq |
-| Output | Produces the final workflow output |
-| Text | Performs text processing and variable resolution |
+| Input | Provides workflow input |
+| LLM | Generates AI responses using Groq |
+| Output | Produces workflow output |
+| Text | Processes text and variables |
 | Math | Performs arithmetic operations |
-| Filter | Filters values based on a keyword |
-| Delay | Pauses workflow execution for a configured duration |
-| Condition | Evaluates conditions and routes TRUE/FALSE branches |
+| Filter | Filters values using a keyword |
+| Delay | Delays workflow execution |
+| Condition | Routes execution through TRUE/FALSE branches |
 | API | Sends HTTP requests and returns responses |
 
 ---
 
 # 🔀 Conditional Branching
 
-Graphinity supports conditional workflow execution through dedicated TRUE and FALSE output handles.
+Graphinity supports conditional workflows through TRUE and FALSE output handles.
 
 Example:
 
@@ -201,7 +135,7 @@ value > 10
   └──── FALSE ───► Output 2
 ```
 
-The execution engine evaluates the configured condition and activates only the selected branch.
+The execution engine evaluates the configured condition and activates the selected branch.
 
 Inactive branches can be reported as **skipped** in the execution monitor.
 
@@ -218,7 +152,7 @@ The LLM node provides:
 - User prompt
 - Workflow input propagation
 
-Example workflow:
+Example:
 
 ```text
 Input
@@ -230,7 +164,7 @@ LLM
 Output
 ```
 
-The backend sends the configured prompts and upstream workflow values to the Groq model and returns the generated response to downstream nodes.
+The backend sends the configured prompts and workflow input to the Groq model and returns the generated response to downstream nodes.
 
 ---
 
@@ -238,7 +172,7 @@ The backend sends the configured prompts and upstream workflow values to the Gro
 
 The API node allows workflows to communicate with external HTTP services.
 
-Supported HTTP methods include:
+Supported methods include:
 
 ```text
 GET
@@ -248,7 +182,7 @@ DELETE
 PATCH
 ```
 
-The node provides:
+The API node provides:
 
 - HTTP method
 - URL
@@ -267,52 +201,44 @@ API
 Output
 ```
 
-For GET requests, upstream input can be passed as query parameters.
-
-For other supported methods, upstream input can be sent as JSON request data.
+The API response can then be passed to downstream workflow nodes.
 
 ---
 
 # 🔄 Workflow Execution
 
-Graphinity executes workflows as directed graphs.
+Graphinity treats each workflow as a directed graph.
 
 The execution process is:
 
 ```text
-1. Receive workflow
-        ↓
-2. Validate graph
-        ↓
-3. Check for cycles
-        ↓
-4. Determine execution order
-        ↓
-5. Build node dependencies
-        ↓
-6. Execute nodes
-        ↓
-7. Evaluate conditions
-        ↓
-8. Route active branches
-        ↓
-9. Record execution logs
-        ↓
-10. Collect output nodes
-        ↓
-11. Return execution result
+Workflow
+   ↓
+Validate Graph
+   ↓
+Check for Cycles
+   ↓
+Determine Execution Order
+   ↓
+Execute Nodes
+   ↓
+Evaluate Conditions
+   ↓
+Route Active Branch
+   ↓
+Collect Outputs
+   ↓
+Return Execution Logs
 ```
 
-Each executed node can record:
+Each node can produce execution information such as:
 
-- Node ID
-- Node type
-- Execution status
+- Status
 - Inputs
+- Outputs
 - Input handles
-- Output
-- Execution duration
-- Errors when applicable
+- Execution time
+- Errors
 - Condition result
 - Selected branch
 
@@ -320,16 +246,16 @@ Each executed node can record:
 
 # 📊 Execution Monitor
 
-After running a workflow, Graphinity provides an execution monitor containing:
+After a workflow is executed, Graphinity displays an execution monitor containing:
 
 - Overall workflow status
 - Number of executed nodes
 - Number of skipped nodes
-- Total execution duration
+- Total duration
 - Execution order
-- Node-by-node results
-- Inputs and outputs
-- Execution time per node
+- Node-level results
+- Node inputs and outputs
+- Execution time
 - Condition results
 - Selected branch
 - Error information
@@ -363,6 +289,48 @@ Output
 
 ---
 
+# 🚀 Technology Stack
+
+## Frontend
+
+- React.js
+- React Flow
+- Zustand
+- JavaScript
+- React Markdown
+- remark-gfm
+
+## Backend
+
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
+- Requests
+
+## Workflow Engine
+
+- NetworkX
+- DAG execution
+- Dependency-based execution
+- Conditional routing
+
+## AI
+
+- Groq API
+- Groq Python SDK
+- GPT OSS 20B
+
+## Development Tools
+
+- Git
+- GitHub
+- VS Code
+- npm
+- Python virtual environment
+
+---
+
 # 📂 Project Structure
 
 ```text
@@ -385,8 +353,7 @@ Graphinity/
 │   │   └── validation_service.py
 │   │
 │   ├── main.py
-│   ├── requirements.txt
-│   └── .env
+│   └── requirements.txt
 │
 ├── frontend/
 │   ├── src/
@@ -422,11 +389,9 @@ Graphinity/
 └── README.md
 ```
 
-> `.env` is used locally for secrets and should not be committed to the repository.
-
 ---
 
-# ⚙️ Installation
+# ⚙️ Setup
 
 ## Clone Repository
 
@@ -435,11 +400,7 @@ git clone https://github.com/DIXANTOFFICIAL1/Graphinity.git
 cd Graphinity
 ```
 
----
-
-# 🐍 Backend Setup
-
-Open a terminal and navigate to the backend:
+## Backend
 
 ```bash
 cd backend
@@ -463,23 +424,33 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the FastAPI backend:
+Create:
+
+```text
+backend/.env
+```
+
+Add:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+```
+
+Start the backend:
 
 ```bash
 python -m uvicorn main:app --reload
 ```
 
-The backend will run on:
+Backend:
 
 ```text
 http://localhost:8000
 ```
 
----
+## Frontend
 
-# ⚛️ Frontend Setup
-
-Open a second terminal:
+Open another terminal:
 
 ```bash
 cd frontend
@@ -491,13 +462,13 @@ Install dependencies:
 npm install
 ```
 
-Start the React application:
+Start the frontend:
 
 ```bash
 npm start
 ```
 
-The frontend will run on:
+Frontend:
 
 ```text
 http://localhost:3000
@@ -507,15 +478,15 @@ http://localhost:3000
 
 # 🔐 Environment Variables
 
-Create a `.env` file inside the `backend` directory.
+Create a `.env` file inside the `backend` directory:
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 ```
 
-The key is used by the backend to communicate with the Groq API for LLM execution.
+The key is used by the backend for LLM execution through the Groq API.
 
-**Never commit your `.env` file or expose API keys publicly.**
+**Never commit your `.env` file or expose your API key publicly.**
 
 ---
 
@@ -529,23 +500,11 @@ The key is used by the backend to communicate with the Groq API for LLM executio
 http://localhost:3000
 ```
 
-4. Drag nodes from the toolbar onto the workflow canvas.
-5. Configure the node values.
+4. Drag nodes from the toolbar onto the canvas.
+5. Configure the node fields.
 6. Connect the nodes.
 7. Click **Run Workflow**.
-8. View execution details in the **Execution Monitor**.
-
-Example workflow:
-
-```text
-Input
-  │
-  ▼
-LLM
-  │
-  ▼
-Output
-```
+8. Inspect the execution details in the **Execution Monitor**.
 
 ---
 
@@ -563,18 +522,16 @@ Example input:
 What is artificial intelligence?
 ```
 
-The LLM processes the request and returns the generated answer to the Output node.
-
 ---
 
 ## Conditional Workflow
 
 ```text
-                ┌──── TRUE ────► Output 1
+                ┌──── TRUE ─────► Output 1
                 │
 Input → Condition
                 │
-                └──── FALSE ───► Output 2
+                └──── FALSE ────► Output 2
 ```
 
 Example condition:
@@ -610,13 +567,13 @@ Division
 Input → API → Output
 ```
 
-The API node sends the request to the configured HTTP endpoint and passes the response downstream.
+The API node sends the request to the configured HTTP endpoint and passes the response to the next node.
 
 ---
 
 # 🧱 Backend Architecture
 
-The backend is organized into separate layers:
+The backend is organized into three main layers:
 
 ```text
 backend/
@@ -633,21 +590,17 @@ backend/
     └── Validation
 ```
 
-### API Layer
+### API
 
-Handles incoming workflow execution requests and exposes backend endpoints.
+Handles workflow-related HTTP requests.
 
-### Models Layer
+### Models
 
-Defines workflow-related data structures such as:
+Defines workflow data structures such as nodes, edges, and workflow inputs.
 
-- Nodes
-- Edges
-- Workflow inputs
+### Services
 
-### Services Layer
-
-Contains the core workflow logic:
+Contains the core workflow logic for:
 
 - Graph validation
 - DAG execution
@@ -661,7 +614,7 @@ Contains the core workflow logic:
 
 # 🎨 Frontend Architecture
 
-The frontend follows a modular node-based architecture.
+The frontend follows a modular node-based architecture:
 
 ```text
 React Application
@@ -672,7 +625,7 @@ React Application
        │       │
        │       └── React Flow
        │
-       ├── Node Components
+       ├── Workflow Nodes
        │
        ├── Zustand Store
        │
@@ -681,94 +634,25 @@ React Application
        └── Execution Monitor
 ```
 
-Each workflow node is implemented as an independent React component and shares common handle and visual behavior through `BaseNode`.
-
----
-
-# 🧩 Reusable Frontend Components
-
-Graphinity uses reusable components to keep the workflow editor modular.
-
-Examples include:
-
-- `BaseNode.js`
-- `ExecutionPanel.js`
-- `useNodeField.js`
-- `DraggableNode`
-- Individual workflow node components
-
-The shared node structure allows new workflow nodes to be added without rewriting the entire workflow editor.
-
----
-
-# 🔍 Graph Execution Engine
-
-Graphinity treats the workflow as a directed graph.
-
-The execution engine uses graph relationships to determine dependencies between nodes and calculates a valid execution order.
-
-For example:
-
-```text
-Input → Text → LLM → Output
-```
-
-becomes:
-
-```text
-1. Input
-2. Text
-3. LLM
-4. Output
-```
-
-Before execution, the graph is checked for cycles.
-
-Cyclic workflows are rejected because the execution engine expects a Directed Acyclic Graph.
-
----
-
-# 📌 Project Highlights
-
-- Full-stack workflow execution platform
-- Visual node-based workflow editor
-- React Flow integration
-- Zustand state management
-- FastAPI backend
-- NetworkX graph processing
-- DAG-based execution
-- Conditional branch routing
-- Real Groq LLM integration
-- HTTP API execution
-- Workflow input/output propagation
-- Node-level execution logs
-- Execution timing
-- Error handling
-- Interactive workflow canvas
-- Modular architecture
-- Reusable workflow node components
+`BaseNode.js` provides shared node structure and handle styling, while individual node components implement their specific behavior and fields.
 
 ---
 
 # 📸 Screenshots
 
-## Workflow Canvas
+Add your actual screenshots to an `assets` folder.
 
-Add your actual Graphinity screenshot here:
+## Workflow Canvas
 
 ```markdown
 ![Workflow Canvas](./assets/workflow-canvas.png)
 ```
-
----
 
 ## Conditional Workflow
 
 ```markdown
 ![Conditional Workflow](./assets/condition-workflow.png)
 ```
-
----
 
 ## Execution Monitor
 
@@ -780,20 +664,14 @@ Add your actual Graphinity screenshot here:
 
 # 🔮 Future Scope
 
-Potential future improvements include:
-
-- Workflow persistence
-- Save and load workflows
+- Workflow save and load
 - Workflow templates
 - Additional LLM providers
 - More advanced branching
-- Parallel node execution
-- Authentication
-- Cloud deployment
-- Workflow versioning
-- Database-backed workflow storage
+- Parallel execution
 - Execution history
-- Real-time execution visualization
+- User authentication
+- Cloud deployment
 
 ---
 
@@ -835,21 +713,16 @@ This project is licensed under the **MIT License**.
 
 **Dixant Soni**
 
-B.Tech CSE (AI & Data Science)
-
+B.Tech CSE (AI & Data Science)  
 Indian Institute of Information Technology Manipur
 
-Interested in Software Engineering, Artificial Intelligence, Data Science, and Full-Stack Development.
-
-### GitHub
-
-https://github.com/DIXANTOFFICIAL1/Graphinity
+GitHub: https://github.com/DIXANTOFFICIAL1
 
 ---
 
 <div align="center">
 
-### ⭐ If you found Graphinity useful, consider giving the repository a star!
+### ⭐ If you like Graphinity, consider giving the repository a star!
 
 **Build. Connect. Execute. 🚀**
 
