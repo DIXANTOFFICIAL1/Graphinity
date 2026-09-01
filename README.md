@@ -451,17 +451,21 @@ Input → Condition
 
 # 📸 Screenshots
 
-## Workflow Canvas
+## Main Workflow
 
-![Graphinity Workflow Canvas](./assets/images/workflow.png)
+![Graphinity Main Workflow](./assets/images/workflow.png)
 
-## Conditional Branching
+### Execution Result
 
-![Graphinity Conditional Workflow](./assets/images/condition.png)
+![Graphinity Main Workflow Execution](./assets/images/execution1.png)
 
-## Execution Monitor
+## API & AI Workflow
 
-![Graphinity Execution Monitor](./assets/images/execution.png)
+![Graphinity API Workflow](./assets/images/api-workflow.png)
+
+### Execution Result
+
+![Graphinity API Workflow Execution](./assets/images/execution2.png)
 
 ---
 
