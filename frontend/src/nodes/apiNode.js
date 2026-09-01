@@ -36,7 +36,7 @@ export default function APINode({
   );
 
   const [
-    headers,
+    ,
     setHeaders,
   ] = useNodeField(
     id,
