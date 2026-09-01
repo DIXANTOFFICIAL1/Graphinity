@@ -50,7 +50,7 @@ export const SubmitButton = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/pipelines/execute",
+        `${process.env.REACT_APP_API_URL}/pipelines/execute`
         {
           method: "POST",
 
