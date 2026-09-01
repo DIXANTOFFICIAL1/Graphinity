@@ -451,19 +451,17 @@ Input → Condition
 
 # 📸 Screenshots
 
-Add your actual project screenshots to an `assets` directory.
+## Workflow Canvas
 
-```text
-assets/
-├── workflow-canvas.png
-└── execution-monitor.png
-```
+![Graphinity Workflow Canvas](./assets/images/workflow.png)
 
-Example:
+## Conditional Branching
 
-```markdown
-![Graphinity Workflow Canvas](./assets/workflow-canvas.png)
-```
+![Graphinity Conditional Workflow](./assets/images/condition.png)
+
+## Execution Monitor
+
+![Graphinity Execution Monitor](./assets/images/execution.png)
 
 ---
 
