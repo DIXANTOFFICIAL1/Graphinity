@@ -6,12 +6,13 @@
 
 A full-stack platform for building, connecting, validating, and executing AI-powered workflows through a visual node-based editor.
 
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
 ![React Flow](https://img.shields.io/badge/React%20Flow-Workflow%20Editor-0f172a?style=for-the-badge)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python)
-![NetworkX](https://img.shields.io/badge/NetworkX-Graph%20Engine-1f77b4?style=for-the-badge)
-![Groq](https://img.shields.io/badge/Groq-AI%20API-6E56CF?style=for-the-badge)
+![Zustand](https://img.shields.io/badge/State-Zustand-443627?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi)
+![NetworkX](https://img.shields.io/badge/Graph-NetworkX-1f77b4?style=for-the-badge)
+![Groq](https://img.shields.io/badge/AI-Groq%20API-6E56CF?style=for-the-badge)
 
 </div>
 
