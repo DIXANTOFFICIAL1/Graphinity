@@ -490,10 +490,13 @@ Input → Condition
 
 **Dixant Soni**
 
-B.Tech CSE (AI & Data Science)  
-Indian Institute of Information Technology Manipur
+- 🎓 B.Tech CSE (AI & Data Science)
+- Indian Institute of Information Technology Manipur
+- Passionate about Software Engineering, Artificial Intelligence, and Full-Stack Development
 
-[GitHub](https://github.com/DIXANTOFFICIAL1)
+### GitHub
+
+https://github.com/DIXANTOFFICIAL1
 
 ---
 
