@@ -11,60 +11,41 @@ from services.graph_service import get_execution_order
 
 load_dotenv()
 
-# GROQ
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-groq_client = (
-    Groq(api_key=GROQ_API_KEY)
-    if GROQ_API_KEY
-    else None
-)
+# GROQ API
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+
 
 # NODE TYPE
 def get_node_type(node: Node) -> str:
-    return (
-        node.type
-        or node.data.get("nodeType")
-        or ""
-    ).lower()
+    return (node.type or node.data.get("nodeType") or "").lower()
+
 
 # VARIABLE RESOLUTION
-def resolve_variables(
-    template: str,
-    variables: Dict[str, Any]
-) -> str:
+def resolve_variables(template: str, variables: Dict[str, Any]) -> str:
     result = str(template)
 
     for key, value in variables.items():
-        result = result.replace(
-            f"{{{{{key}}}}}",
-            str(value)
-        )
+        result = result.replace(f"{{{{{key}}}}}", str(value))
 
     return result
 
+
 # LLM
-def execute_llm(
-    node: Node,
-    input_values: List[Any]
-) -> str:
+def execute_llm(node: Node, input_values: List[Any]) -> str:
     if not groq_client:
-        raise ValueError(
-            "GROQ_API_KEY is not configured."
-        )
+        raise ValueError("GROQ_API_KEY is not configured.")
 
     data = node.data or {}
-
     system_prompt = data.get(
         "systemPrompt",
         "You are a helpful AI assistant."
     )
-
     prompt = data.get(
         "prompt",
         "Answer the user's request clearly."
     )
-
     model = data.get(
         "model",
         "openai/gpt-oss-20b"
@@ -72,64 +53,36 @@ def execute_llm(
 
     if input_values:
         upstream_value = input_values[-1]
+        prompt = prompt.replace("{{input}}", str(upstream_value))
+        prompt = prompt.replace("{{value}}", str(upstream_value))
 
-        prompt = prompt.replace(
-            "{{input}}",
-            str(upstream_value)
-        )
+        if "{{input}}" not in prompt and "{{value}}" not in prompt:
+            prompt = f"{prompt}\n\nInput: {upstream_value}"
 
-        prompt = prompt.replace(
-            "{{value}}",
-            str(upstream_value)
-        )
-
-        if (
-            "{{input}}" not in prompt
-            and "{{value}}" not in prompt
-        ):
-            prompt = (
-                f"{prompt}\n\n"
-                f"Input: {upstream_value}"
-            )
-
-    response = (
-        groq_client
-        .chat
-        .completions
-        .create(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": system_prompt,
-                },
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
-        )
+    response = groq_client.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
     )
 
-    content = (
-        response
-        .choices[0]
-        .message
-        .content
-    )
+    content = response.choices[0].message.content
 
     if not content:
-        raise ValueError(
-            "LLM returned an empty response."
-        )
+        raise ValueError("LLM returned an empty response.")
 
     return content
 
+
 # API
-def execute_api(
-    node: Node,
-    input_values: List[Any]
-) -> Any:
+def execute_api(node: Node, input_values: List[Any]) -> Any:
     data = node.data or {}
 
     method = str(
@@ -147,9 +100,7 @@ def execute_api(
     ).strip()
 
     if not url:
-        raise ValueError(
-            "API node requires a URL."
-        )
+        raise ValueError("API node requires a URL.")
 
     if not (
         url.startswith("http://")
@@ -159,19 +110,12 @@ def execute_api(
             "API URL must start with http:// or https://"
         )
 
-    headers = data.get(
-        "headers",
-        {}
-    )
+    headers = data.get("headers", {})
 
     if not isinstance(headers, dict):
         headers = {}
 
-    input_value = (
-        input_values[-1]
-        if input_values
-        else None
-    )
+    input_value = input_values[-1] if input_values else None
 
     kwargs = {
         "method": method,
@@ -185,36 +129,25 @@ def execute_api(
             kwargs["params"] = {
                 "input": input_value
             }
-    else:
-        if input_value is not None:
-            kwargs["json"] = input_value
+    elif input_value is not None:
+        kwargs["json"] = input_value
 
-    response = requests.request(
-        **kwargs
-    )
-
+    response = requests.request(**kwargs)
     response.raise_for_status()
 
-    content_type = (
-        response
-        .headers
-        .get(
-            "content-type",
-            ""
-        )
-        .lower()
-    )
+    content_type = response.headers.get(
+        "content-type",
+        ""
+    ).lower()
 
     if "application/json" in content_type:
         return response.json()
 
     return response.text
 
+
 # CONDITION EVALUATION
-def evaluate_condition(
-    value: Any,
-    condition: str
-) -> bool:
+def evaluate_condition(value: Any, condition: str) -> bool:
     condition = str(condition).strip()
 
     try:
@@ -222,103 +155,60 @@ def evaluate_condition(
 
         if ">=" in condition:
             threshold = float(
-                condition
-                .split(">=")[-1]
-                .strip()
+                condition.split(">=")[-1].strip()
             )
-
-            return (
-                numeric_value
-                >= threshold
-            )
+            return numeric_value >= threshold
 
         if "<=" in condition:
             threshold = float(
-                condition
-                .split("<=")[-1]
-                .strip()
+                condition.split("<=")[-1].strip()
             )
-
-            return (
-                numeric_value
-                <= threshold
-            )
+            return numeric_value <= threshold
 
         if "==" in condition:
             threshold = float(
-                condition
-                .split("==")[-1]
-                .strip()
+                condition.split("==")[-1].strip()
             )
-
-            return (
-                numeric_value
-                == threshold
-            )
+            return numeric_value == threshold
 
         if ">" in condition:
             threshold = float(
-                condition
-                .split(">")[-1]
-                .strip()
+                condition.split(">")[-1].strip()
             )
-
-            return (
-                numeric_value
-                > threshold
-            )
+            return numeric_value > threshold
 
         if "<" in condition:
             threshold = float(
-                condition
-                .split("<")[-1]
-                .strip()
+                condition.split("<")[-1].strip()
             )
+            return numeric_value < threshold
 
-            return (
-                numeric_value
-                < threshold
-            )
-
-    except (
-        TypeError,
-        ValueError
-    ):
+    except (TypeError, ValueError):
         pass
 
     return bool(value)
+
 
 # NODE EXECUTION
 def execute_node(
     node: Node,
     input_values: Dict[str, Any],
     variables: Dict[str, Any],
-    workflow_inputs: Dict[str, Any]
+    workflow_inputs: Dict[str, Any],
 ) -> Any:
     node_type = get_node_type(node)
     data = node.data or {}
 
-    # INPUT
     if node_type == "custominput":
-        input_name = data.get(
-            "inputName",
-            node.id
-        )
+        input_name = data.get("inputName", node.id)
 
         return workflow_inputs.get(
             input_name,
-            data.get(
-                "value",
-                ""
-            )
+            data.get("value", "")
         )
 
-    # TEXT
     if node_type == "text":
-        text = data.get(
-            "text",
-            ""
-        )
+        text = data.get("text", "")
 
         variables_with_inputs = {
             **variables,
@@ -333,23 +223,17 @@ def execute_node(
         if "in" in input_values:
             text = text.replace(
                 "{{input}}",
-                str(
-                    input_values["in"]
-                )
+                str(input_values["in"])
             )
 
             text = text.replace(
                 "{{value}}",
-                str(
-                    input_values["in"]
-                )
+                str(input_values["in"])
             )
 
         elif input_values:
             first_value = next(
-                iter(
-                    input_values.values()
-                )
+                iter(input_values.values())
             )
 
             text = text.replace(
@@ -364,31 +248,15 @@ def execute_node(
 
         return text
 
-    # MATH
     if node_type == "math":
-        operation = data.get(
-            "operation",
-            "add"
-        )
-
-        a = input_values.get(
-            "a",
-            0
-        )
-
-        b = input_values.get(
-            "b",
-            0
-        )
+        operation = data.get("operation", "add")
+        a = input_values.get("a", 0)
+        b = input_values.get("b", 0)
 
         try:
             a = float(a)
             b = float(b)
-
-        except (
-            TypeError,
-            ValueError
-        ):
+        except (TypeError, ValueError):
             raise ValueError(
                 "Math inputs A and B must be numeric."
             )
@@ -414,11 +282,8 @@ def execute_node(
             f"Unsupported math operation: {operation}"
         )
 
-    # FILTER
     if node_type == "filter":
-        value = input_values.get(
-            "input"
-        )
+        value = input_values.get("input")
 
         keyword = str(
             data.get(
@@ -433,29 +298,21 @@ def execute_node(
         if value is None:
             return None
 
-        if keyword.lower() in str(
-            value
-        ).lower():
+        if keyword.lower() in str(value).lower():
             return value
 
         return None
 
-    # CONDITION
     if node_type == "condition":
-        value = input_values.get(
-            "value"
-        )
+        value = input_values.get("value")
 
         if value is None and input_values:
             value = next(
-                iter(
-                    input_values.values()
-                )
+                iter(input_values.values())
             )
 
         return value
 
-    # DELAY
     if node_type == "delay":
         delay = int(
             data.get(
@@ -469,75 +326,54 @@ def execute_node(
             5000
         )
 
-        time.sleep(
-            delay / 1000
-        )
+        time.sleep(delay / 1000)
 
         if input_values:
             return next(
-                iter(
-                    input_values.values()
-                )
+                iter(input_values.values())
             )
 
         return None
 
-    # LLM
     if node_type == "llm":
-        values = list(
-            input_values.values()
-        )
-
         return execute_llm(
             node,
-            values
+            list(input_values.values())
         )
 
-    # API
     if node_type == "api":
-        values = list(
-            input_values.values()
-        )
-
         return execute_api(
             node,
-            values
+            list(input_values.values())
         )
 
-    # OUTPUT
     if node_type == "customoutput":
         if input_values:
             return next(
-                iter(
-                    input_values.values()
-                )
+                iter(input_values.values())
             )
 
         return None
 
-    # FALLBACK
     if input_values:
         return next(
-            iter(
-                input_values.values()
-            )
+            iter(input_values.values())
         )
 
     return None
+
 
 # WORKFLOW EXECUTION
 def execute_workflow(
     nodes: List[Node],
     edges: List[Edge],
-    workflow_inputs: Dict[str, Any]
+    workflow_inputs: Dict[str, Any],
 ) -> Dict[str, Any]:
     started_at = time.time()
 
-    is_dag, execution_order = (
-        get_execution_order(
-            nodes,
-            edges
-        )
+    is_dag, execution_order = get_execution_order(
+        nodes,
+        edges
     )
 
     if not is_dag:
@@ -550,62 +386,40 @@ def execute_workflow(
         for node in nodes
     }
 
-    # INCOMING EDGES
-    incoming: Dict[
-        str,
-        List[Edge]
-    ] = {
+    incoming: Dict[str, List[Edge]] = {
         node.id: []
         for node in nodes
     }
 
-    # OUTGOING EDGES
-    outgoing: Dict[
-        str,
-        List[Edge]
-    ] = {
+    outgoing: Dict[str, List[Edge]] = {
         node.id: []
         for node in nodes
     }
 
     for edge in edges:
-        incoming[
-            edge.target
-        ].append(edge)
+        incoming[edge.target].append(edge)
+        outgoing[edge.source].append(edge)
 
-        outgoing[
-            edge.source
-        ].append(edge)
-
-    values: Dict[
-        str,
-        Any
-    ] = {}
-
-    branch_results: Dict[
-        str,
-        str
-    ] = {}
-
+    values: Dict[str, Any] = {}
+    branch_results: Dict[str, str] = {}
     logs = []
+    active_nodes = set(execution_order)
 
-    active_nodes = set(
-        execution_order
-    )
-
-    # EXECUTION
     for node_id in execution_order:
         node = node_map[node_id]
 
-        # SKIPPED CONDITIONAL BRANCH
         if node_id not in active_nodes:
             logs.append({
                 "node_id": node_id,
+                "node_name": node.data.get(
+                    "outputName",
+                    node_id
+                ),
                 "node_type": node.type,
                 "status": "skipped",
                 "inputs": [],
                 "output": None,
-                "duration_ms": 0
+                "duration_ms": 0,
             })
 
             continue
@@ -613,12 +427,8 @@ def execute_workflow(
         node_started = time.time()
 
         try:
-            input_values: Dict[
-                str,
-                Any
-            ] = {}
+            input_values: Dict[str, Any] = {}
 
-            # COLLECT INPUTS BY HANDLE
             for edge in incoming[node_id]:
                 source_id = edge.source
 
@@ -626,13 +436,10 @@ def execute_workflow(
                     continue
 
                 if source_id in branch_results:
-                    selected_branch = (
-                        branch_results[source_id]
-                    )
+                    selected_branch = branch_results[source_id]
 
                     source_handle = (
-                        edge.sourceHandle
-                        or ""
+                        edge.sourceHandle or ""
                     ).lower()
 
                     if source_handle != selected_branch:
@@ -641,15 +448,11 @@ def execute_workflow(
                 value = values[source_id]
 
                 target_handle = (
-                    edge.targetHandle
-                    or "input"
+                    edge.targetHandle or "input"
                 )
 
-                input_values[
-                    target_handle
-                ] = value
+                input_values[target_handle] = value
 
-            # DETERMINE INPUT AVAILABILITY
             if incoming[node_id]:
                 has_active_input = any(
                     edge.source in values
@@ -659,34 +462,39 @@ def execute_workflow(
                 if not has_active_input:
                     logs.append({
                         "node_id": node_id,
+                        "node_name": node.data.get(
+                            "outputName",
+                            node_id
+                        ),
                         "node_type": node.type,
                         "status": "skipped",
                         "inputs": [],
                         "output": None,
-                        "duration_ms": 0
+                        "duration_ms": 0,
                     })
 
                     continue
 
-            # VARIABLES
             variables = {
                 key: value
                 for key, value in values.items()
             }
 
-            # EXECUTE
             output = execute_node(
                 node=node,
                 input_values=input_values,
                 variables=variables,
-                workflow_inputs=workflow_inputs
+                workflow_inputs=workflow_inputs,
             )
 
             values[node_id] = output
 
-            # LOG
             logs.append({
                 "node_id": node_id,
+                "node_name": node.data.get(
+                    "outputName",
+                    node_id
+                ),
                 "node_type": node.type,
                 "status": "completed",
                 "inputs": list(
@@ -700,14 +508,10 @@ def execute_workflow(
                         - node_started
                     ) * 1000,
                     2
-                )
+                ),
             })
 
-            # CONDITIONAL ROUTING
-            if (
-                get_node_type(node)
-                == "condition"
-            ):
+            if get_node_type(node) == "condition":
                 condition_value = output
 
                 condition_expression = str(
@@ -719,7 +523,7 @@ def execute_workflow(
 
                 condition_result = evaluate_condition(
                     condition_value,
-                    condition_expression
+                    condition_expression,
                 )
 
                 selected_branch = (
@@ -728,9 +532,7 @@ def execute_workflow(
                     else "false"
                 )
 
-                branch_results[node_id] = (
-                    selected_branch
-                )
+                branch_results[node_id] = selected_branch
 
                 logs[-1]["condition"] = (
                     condition_expression
@@ -746,8 +548,7 @@ def execute_workflow(
 
                 for edge in outgoing[node_id]:
                     source_handle = (
-                        edge.sourceHandle
-                        or ""
+                        edge.sourceHandle or ""
                     ).lower()
 
                     if source_handle != selected_branch:
@@ -760,12 +561,13 @@ def execute_workflow(
                 "node_id": node_id,
                 "node_type": node.type,
                 "status": "failed",
-                "inputs": list(
-                    input_values.values()
-                )
-                if "input_values"
-                in locals()
-                else [],
+                "inputs": (
+                    list(
+                        input_values.values()
+                    )
+                    if "input_values" in locals()
+                    else []
+                ),
                 "error": str(error),
                 "duration_ms": round(
                     (
@@ -773,7 +575,7 @@ def execute_workflow(
                         - node_started
                     ) * 1000,
                     2
-                )
+                ),
             })
 
             return {
@@ -781,8 +583,7 @@ def execute_workflow(
                 "nodes_executed": len([
                     log
                     for log in logs
-                    if log["status"]
-                    != "skipped"
+                    if log["status"] != "skipped"
                 ]),
                 "execution_order": execution_order,
                 "node_values": values,
@@ -795,7 +596,7 @@ def execute_workflow(
                         - started_at
                     ) * 1000,
                     2
-                )
+                ),
             }
 
     # OUTPUT NODES
@@ -808,9 +609,7 @@ def execute_workflow(
     ]
 
     outputs = {
-        node_id: values.get(
-            node_id
-        )
+        node_id: values.get(node_id)
         for node_id in output_nodes
         if node_id in values
     }
@@ -821,14 +620,12 @@ def execute_workflow(
         "nodes_executed": len([
             log
             for log in logs
-            if log["status"]
-            == "completed"
+            if log["status"] == "completed"
         ]),
         "nodes_skipped": len([
             log
             for log in logs
-            if log["status"]
-            == "skipped"
+            if log["status"] == "skipped"
         ]),
         "execution_order": execution_order,
         "node_values": values,
@@ -840,5 +637,5 @@ def execute_workflow(
                 - started_at
             ) * 1000,
             2
-        )
+        ),
     }
