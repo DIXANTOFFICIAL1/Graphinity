@@ -353,8 +353,9 @@ Graphinity/
 
 # 🌐 Live Demo
 
-**Frontend:** https://graphinity-1.vercel.app
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Graphinity-000000?style=for-the-badge&logo=vercel)](https://graphinity-1.vercel.app)
 
+**Frontend:** https://graphinity-1.vercel.app  
 **Backend:** https://graphinity.onrender.com
 
 ---
@@ -389,13 +390,12 @@ GROQ_API_KEY=your_groq_api_key
 # 💻 Usage
 
 1. Open the [Graphinity Live Demo](https://graphinity-1.vercel.app).
-2. Drag nodes from the toolbar onto the canvas.
-3. Configure the node fields.
-4. Connect nodes together.
-5. Click **Run Workflow**.
-6. Inspect execution status, node results, timing, and final output in the **Execution Monitor**.
+2. Drag nodes from the toolbar onto the workflow canvas.
+3. Configure node fields and connect the required nodes.
+4. Click **Run Workflow**.
+5. View execution status, node results, timing, and final output in the **Execution Monitor**.
 
-### Example Workflow
+### Main Workflow
 
 ```text
 Input → Math → Condition → LLM/API → Output
@@ -405,27 +405,6 @@ Input → Math → Condition → LLM/API → Output
 
 ```text
 Input → API → Filter → LLM → Output
-```
-
-### Example
-
-```text
-Input → LLM → Output
-```
-
-Or:
-
-```text
-Input → Condition
-              │
-        ┌─────┴─────┐
-        ▼           ▼
-      TRUE        FALSE
-        │           │
-       LLM        Output
-        │
-        ▼
-      Output
 ```
 
 ---
