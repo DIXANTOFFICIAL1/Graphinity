@@ -291,6 +291,13 @@ This makes it possible to inspect **how the workflow executed**, rather than onl
 ```text
 Graphinity/
 │
+├── assets/
+│   └── images/
+│       ├── workflow.png
+│       ├── execution1.png
+│       ├── api-workflow.png
+│       └── execution2.png
+│
 ├── backend/
 │   ├── api/
 │   │   ├── __init__.py
@@ -339,10 +346,7 @@ Graphinity/
 │   └── package-lock.json
 │
 ├── .gitignore
-├── LICENSE
 └── README.md
-```
-
 ---
 
 # ⚙️ Setup
