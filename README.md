@@ -351,6 +351,14 @@ Graphinity/
 ```
 ---
 
+# 🌐 Live Demo
+
+**Frontend:** https://graphinity-1.vercel.app
+
+**Backend:** https://graphinity.onrender.com
+
+---
+
 # ⚙️ Setup
 
 ## 1. Clone the Repository
@@ -360,24 +368,7 @@ git clone https://github.com/DIXANTOFFICIAL1/Graphinity.git
 cd Graphinity
 ```
 
-## 2. Backend Setup
-
-```bash
-cd backend
-python -m venv venv
-```
-
-Activate the virtual environment on Windows:
-
-```powershell
-.\venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
+## 2. Environment Variables
 
 Create:
 
@@ -391,46 +382,30 @@ Add your Groq API key:
 GROQ_API_KEY=your_groq_api_key
 ```
 
-Run the backend:
-
-```bash
-python -m uvicorn main:app --reload
-```
-
-Backend:
-
-```text
-http://localhost:8000
-```
-
-## 3. Frontend Setup
-
-Open a second terminal:
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Frontend:
-
-```text
-http://localhost:3000
-```
+> Never commit your `.env` file or expose your API key publicly.
 
 ---
 
 # 💻 Usage
 
-1. Start the backend.
-2. Start the frontend.
-3. Open `http://localhost:3000`.
-4. Drag nodes from the toolbar onto the canvas.
-5. Configure the node fields.
-6. Connect nodes together.
-7. Click **Run Workflow**.
-8. Inspect the execution details in the **Execution Monitor**.
+1. Open the [Graphinity Live Demo](https://graphinity-1.vercel.app).
+2. Drag nodes from the toolbar onto the canvas.
+3. Configure the node fields.
+4. Connect nodes together.
+5. Click **Run Workflow**.
+6. Inspect execution status, node results, timing, and final output in the **Execution Monitor**.
+
+### Example Workflow
+
+```text
+Input → Math → Condition → LLM/API → Output
+```
+
+### API Workflow
+
+```text
+Input → API → Filter → LLM → Output
+```
 
 ### Example
 
