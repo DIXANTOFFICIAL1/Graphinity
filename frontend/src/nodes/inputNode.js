@@ -1,30 +1,91 @@
-import { useState } from "react";
 import BaseNode from "./BaseNode";
+import useNodeField from "../useNodeField";
 
 export default function InputNode({ id, data }) {
-  const [currName, setCurrName] = useState(
-    data?.inputName || id.replace("customInput-", "input_")
+  const [inputName, setInputName] = useNodeField(
+    id,
+    data,
+    "inputName",
+    id.replace("customInput-", "input_")
   );
-  const [inputType, setInputType] = useState(data?.inputType || "Text");
+
+  const [value, setValue] = useNodeField(
+    id,
+    data,
+    "value",
+    "What is AI?"
+  );
+
+  const [inputType, setInputType] = useNodeField(
+    id,
+    data,
+    "inputType",
+    "Text"
+  );
 
   return (
-    <BaseNode title="Input" outputs={["value"]}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        <label>
-          Name:
+    <BaseNode
+      title="Input"
+      outputs={["value"]}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+        }}
+      >
+        <label
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <span>Name:</span>
+
           <input
             type="text"
-            value={currName}
-            onChange={(e) => setCurrName(e.target.value)}
+            value={inputName}
+            onChange={(e) =>
+              setInputName(e.target.value)
+            }
           />
         </label>
-      
-        <label>
-          Type:
+
+        <label
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <span>Value:</span>
+
+          <input
+            type="text"
+            value={value}
+            onChange={(e) =>
+              setValue(e.target.value)
+            }
+          />
+        </label>
+
+        <label
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <span>Type:</span>
+
           <select
             value={inputType}
-            onChange={(e) => setInputType(e.target.value)}
-          >           
+            onChange={(e) =>
+              setInputType(e.target.value)
+            }
+          >
             <option value="Text">Text</option>
             <option value="File">File</option>
           </select>
