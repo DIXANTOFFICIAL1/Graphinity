@@ -52,6 +52,7 @@ Graphinity also supports **real LLM execution through the Groq API**, conditiona
 - 🔒 Canvas interaction lock
 - 🗺️ Zoom, fit-view, and minimap controls
 
+
 ---
 
 # 🏗️ Architecture
