@@ -122,7 +122,6 @@ Graphinity currently supports:
 
 ---
 
-
 # 🔀 Conditional Workflows
 
 Graphinity supports handle-aware conditional routing.
