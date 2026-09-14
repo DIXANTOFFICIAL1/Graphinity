@@ -26,6 +26,7 @@ export default function DelayNode({
       outputs={["out"]}
     >
 
+        
       <input
         type="number"
         min="0"
