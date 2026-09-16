@@ -33,8 +33,7 @@ export default function ConditionNode({
           gap: "6px",
         }}
       >
-
-        
+       
         <input
           value={condition}
           onChange={(e) =>
