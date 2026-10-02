@@ -18,7 +18,6 @@ A full-stack platform for building, connecting, validating, and executing AI-pow
 
 ---
 
-
 # 📖 Overview
 
 **Graphinity** is a visual workflow builder that lets users create AI and data workflows without writing the entire workflow as code.
