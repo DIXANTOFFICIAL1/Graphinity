@@ -1,6 +1,5 @@
 <div align="center">
 
-
 # 🔷 Graphinity
 
 ### Visual AI Workflow Builder & Execution Engine
