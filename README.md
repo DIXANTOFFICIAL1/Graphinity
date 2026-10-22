@@ -2,7 +2,6 @@
 
 # 🔷 Graphinity
 
-
 ### Visual AI Workflow Builder & Execution Engine
 
 A full-stack platform for building, connecting, validating, and executing AI-powered workflows through a visual node-based editor.
