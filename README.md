@@ -120,7 +120,6 @@ Graphinity currently supports:
 | **Condition** | Routes execution through TRUE/FALSE branches |
 | **API** | Sends HTTP requests and returns responses |
 
-
 ---
 
 # 🔀 Conditional Workflows
